@@ -18,15 +18,32 @@ public class Title {
 	this.titleId = titleId;
 	this.name = name;
     }
+    
+    public Title() {} // required for deserialization
 
-    @JsonProperty 
+
+    @JsonProperty
     public UUID getTitleId () {
 	return this.titleId;
     }
 
-    @JsonProperty 
-    public String getName() {
+    @JsonProperty
+    public void setTitleId (String uuidStr) {
+	if (uuidStr != null && !uuidStr.isEmpty()) {
+	    this.titleId = UUID.fromString( uuidStr );
+	}
+    }
+
+    @JsonProperty
+    public String getName () {
 	return this.name;
+    }
+
+    @JsonProperty
+    public void setName (String name) {
+	if (name != null && !name.isEmpty()) {
+	    this.name = name;
+	}
     }
 
 }

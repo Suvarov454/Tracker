@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.DBI;
 // import java.sql.ResultSet; //killme
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The concrete instantiation of <code>TitleFacade</code> for H2 databases
@@ -34,6 +35,17 @@ public class H2TitleDb implements TitleFacade {
     public H2TitleDb (DBI dbi, TitleDAO dao) {
 	this.dbi = dbi;
 	this.dao = dao;
+    }
+
+    @Override
+    public Title addTitle (AutoCloseable resources, Title input) throws SQLException {
+	// // We need a DBI handle, which we *should* be available in resources.
+	// Handle handle = LazyHandle.open( resources ); //killme
+
+	// Use a random UUID instead of the input one.
+	Title newTitle = new Title( UUID.randomUUID(), input.getName() );
+	this.dao.addTitle( newTitle );
+	return newTitle;
     }
 
     @Override

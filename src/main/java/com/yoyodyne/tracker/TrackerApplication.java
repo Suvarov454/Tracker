@@ -1,6 +1,7 @@
 package com.yoyodyne.tracker;
 
 import com.yoyodyne.tracker.resource.PingResource;
+import com.yoyodyne.tracker.resource.AchievementResource;
 import com.yoyodyne.tracker.resource.TitleResource;
 import com.yoyodyne.tracker.db.DbFacade;
 import io.dropwizard.Application;
@@ -52,6 +53,7 @@ public class TrackerApplication extends Application<TrackerConfiguration> {
 
         environment.jersey().register(new PingResource());
         environment.jersey().register(new TitleResource( database ));
+        environment.jersey().register(new AchievementResource( database ));
     }
 
     public static void usage() {

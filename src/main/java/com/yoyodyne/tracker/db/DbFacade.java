@@ -43,6 +43,13 @@ public abstract class DbFacade {
     public abstract AutoCloseable open ();
 
     /**
+     * Get the accessors for interacting with achievement entities.
+     *
+     * @return a <code>AchievementFacade</code> instance.
+     */
+    public abstract AchievementFacade getAchievementFacade ();
+
+    /**
      * Get the accessors for interacting with title entities.
      *
      * @return a <code>TitleFacade</code> instance.

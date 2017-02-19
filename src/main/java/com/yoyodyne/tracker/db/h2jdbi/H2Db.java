@@ -1,9 +1,12 @@
 package com.yoyodyne.tracker.db.h2jdbi;
 
+import com.yoyodyne.tracker.db.h2jdbi.dao.AchievementDAO;
 import com.yoyodyne.tracker.db.h2jdbi.dao.TitleDAO;
 import com.yoyodyne.tracker.db.jdbi.LazyHandle;
+import com.yoyodyne.tracker.db.AchievementFacade;
 import com.yoyodyne.tracker.db.DbFacade;
 import com.yoyodyne.tracker.db.TitleFacade;
+import com.yoyodyne.tracker.domain.Achievement;
 import com.yoyodyne.tracker.domain.Title;
 import com.yoyodyne.tracker.TrackerConfiguration;
 import io.dropwizard.jdbi.DBIFactory;
@@ -19,17 +22,20 @@ import java.util.List;
 public class H2Db extends DbFacade {
 
     private final DBI dbi;
+    private final AchievementDAO achievementDao;
     private final TitleDAO titleDao;
     
     /**
-     * Use the given <code>DBI</code> to access Title entities.
+     * Implement a facade to query H2 database using JDBI using the given
+     * configuration and environment
      *
-     * @param dbi the <code>DBI</code> to be used.
-     * @param dao the <code>TitleDBI</code> to be used.
+     * @param config the application's <code>TrackerConfiguration</code>.
+     * @param env the Dropwizard <code>Environment</code> to be used.
      */
     public H2Db (TrackerConfiguration config, Environment env) {
 	super( config, env );
 	this.dbi = new DBIFactory().build( env, config.getDataSourceFactory(), "db" );
+	this.achievementDao = dbi.onDemand( AchievementDAO.class );
 	this.titleDao = dbi.onDemand( TitleDAO.class );
     }
 
@@ -37,6 +43,11 @@ public class H2Db extends DbFacade {
     public AutoCloseable open () {
 	// Provide a lazy-opening JDBI handle.
 	return new LazyHandle( dbi );
+    }
+
+    @Override
+    public AchievementFacade getAchievementFacade () {
+	return new H2AchievementDb( this.dbi, this.achievementDao );
     }
 
     @Override
