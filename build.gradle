@@ -1,0 +1,81 @@
+apply plugin: 'java'
+apply plugin: 'gradle-one-jar'
+apply plugin: 'application'
+
+// Use Java 8 by default
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+// The main class of the application
+mainClassName = 'com.yoyodyne.tracker.TrackerApplication'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
+    }
+}
+
+// Set our project variables
+project.ext {
+    dropwizardVersion = '1.0.6'
+    dwSwaggerVersion = '1.0.6-1'
+    gradleVersion = '2.13'
+    swaggerVersion = '1.5.3'
+}
+
+repositories {
+    jcenter()
+
+    mavenCentral()
+}
+ 
+dependencies {
+    compile (
+       'io.dropwizard:dropwizard-core:' + dropwizardVersion,
+       'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion,
+       'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
+       'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
+       'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion,
+       'com.smoketurner:dropwizard-swagger:' + dwSwaggerVersion,
+       'com.h2database:h2:1.4.193'
+    )
+    compile( 'io.swagger:swagger-jaxrs:' + swaggerVersion ) {
+       exclude module: 'javassist'
+       exclude module: 'jsr311-api'
+       exclude module: 'org.javassist'
+    }
+    testCompile 'org.testng:testng:6.9.10'
+}
+
+// Configure the oneJar task
+task oneJar(type: OneJar) {
+    mainClass = mainClassName
+}
+
+// Configure the run task to start the Dropwizard service
+run {
+//    args 'check', './config/tracker.yml'
+    args 'server', './config/tracker.yml'
+}
+
+// 
+
+test {
+     useTestNG()
+}
+
+task wrapper(type: Wrapper) {
+     gradleVersion = gradleVersion
+}
+
+compileJava {
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
+compileTestJava {
+    options.compilerArgs << "-Xlint:unchecked"
+}
