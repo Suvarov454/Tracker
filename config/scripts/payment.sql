@@ -1,0 +1,30 @@
+CREATE TABLE PAYMENT (
+payment_id UUID PRIMARY KEY,
+title_id UUID,
+player_id UUID,
+timestamp DATETIME,
+extention_duration BIGINT,
+expiration_basis DATE,
+expiration_date DATE,
+amount DECIMAL(20,2),
+currency VARCHAR(8),
+type VARCHAR(8),
+token VARCHAR(255)
+);
+
+ALTER TABLE PAYMENT ADD FOREIGN KEY (title_id) REFERENCES TITLE(title_id);
+ALTER TABLE PAYMENT ADD FOREIGN KEY (player_id) REFERENCES PLAYER(player_id);
+
+INSERT INTO PAYMENT VALUES (
+'4a8b45d9-7885-4923-8d97-5f91b07fa4fd',
+'10052271-56fa-46d4-acce-4665bcbc00e6',
+'0a3a322d-7528-4680-9518-4ace0128a8ab',
+'2017-01-01 16:20:42',
+90,
+'2017-01-01',
+'2017-04-01',
+24.95,
+'USD',
+'VISA',
+'1234-5678-1234-5678'
+);

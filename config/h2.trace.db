@@ -378,3 +378,128 @@ sort VARCHAR(255)
 2017-02-19 16:20:15 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Table "ACHIEVEMENT" not found; SQL statement:
 ALTER TABLE ACHIEVEMENT ADD FOREIGN KEY (title_id) REFERENCES TITLE(title_id) [42102-193]
+2017-02-20 18:13:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PAYMENT (
+PAYMENT_ID UUID PRIMARY KEY,
+TITLE_ID UUID,
+PLAYER_ID UUID,
+TIMESTAMP DATETIME,
+EXTENTION_DURATION BIGINT
+EXPIRATION_BASIS[*] DATE,
+EXPIRATION_DATE DATE,
+AMOUNT DECIMAL(20,2),
+CURRENCY VARCHAR(8),
+TYPE VARCHAR(8),
+TOKEN VARCHAR(255)
+) "; expected "(, FOR, UNSIGNED, NOT, NULL, AS, DEFAULT, GENERATED, NOT, NULL, AUTO_INCREMENT, BIGSERIAL, SERIAL, IDENTITY, NULL_TO_DEFAULT, SEQUENCE, SELECTIVITY, COMMENT, CONSTRAINT, PRIMARY, UNIQUE, NOT, NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE PAYMENT (
+payment_id UUID PRIMARY KEY,
+title_id UUID,
+player_id UUID,
+timestamp DATETIME,
+extention_duration BIGINT
+expiration_basis DATE,
+expiration_date DATE,
+amount DECIMAL(20,2),
+currency VARCHAR(8),
+type VARCHAR(8),
+token VARCHAR(255)
+) [42001-193]
+2017-02-20 18:13:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PAYMENT" not found; SQL statement:
+ALTER TABLE PAYMENT ADD FOREIGN KEY (title_id) REFERENCES TITLE(title_id) [42102-193]
+2017-02-20 18:13:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PAYMENT" not found; SQL statement:
+INSERT INTO PAYMENT VALUES (
+'4a8b45d9-7885-4923-8d97-5f91b07fa4fd',
+'10052271-56fa-46d4-acce-4665bcbc00e6',
+'0a3a322d-7528-4680-9518-4ace0128a8ab',
+'2017-01-01 16:20:42',
+90,
+'2017-01-01',
+'2017-04-01',
+24.95,
+'USD',
+'VISA',
+'1234-5678-1234-5678'
+) [42102-193]
+2017-02-20 18:14:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE PAYMENT (
+PAYMENT_ID UUID PRIMARY KEY,
+TITLE_ID UUID,
+PLAYER_ID UUID,
+TIMESTAMP DATETIME,
+EXTENTION_DURATION BIGINT
+EXPIRATION_BASIS[*] DATE,
+EXPIRATION_DATE DATE,
+AMOUNT DECIMAL(20,2),
+CURRENCY VARCHAR(8),
+TYPE_CODE VARCHAR(8),
+TOKEN VARCHAR(255)
+) "; expected "(, FOR, UNSIGNED, NOT, NULL, AS, DEFAULT, GENERATED, NOT, NULL, AUTO_INCREMENT, BIGSERIAL, SERIAL, IDENTITY, NULL_TO_DEFAULT, SEQUENCE, SELECTIVITY, COMMENT, CONSTRAINT, PRIMARY, UNIQUE, NOT, NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE PAYMENT (
+payment_id UUID PRIMARY KEY,
+title_id UUID,
+player_id UUID,
+timestamp DATETIME,
+extention_duration BIGINT
+expiration_basis DATE,
+expiration_date DATE,
+amount DECIMAL(20,2),
+currency VARCHAR(8),
+type_code VARCHAR(8),
+token VARCHAR(255)
+) [42001-193]
+2017-02-20 18:14:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PAYMENT" not found; SQL statement:
+ALTER TABLE PAYMENT ADD FOREIGN KEY (title_id) REFERENCES TITLE(title_id) [42102-193]
+2017-02-20 18:14:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PAYMENT" not found; SQL statement:
+INSERT INTO PAYMENT VALUES (
+'4a8b45d9-7885-4923-8d97-5f91b07fa4fd',
+'10052271-56fa-46d4-acce-4665bcbc00e6',
+'0a3a322d-7528-4680-9518-4ace0128a8ab',
+'2017-01-01 16:20:42',
+90,
+'2017-01-01',
+'2017-04-01',
+24.95,
+'USD',
+'VISA',
+'1234-5678-1234-5678'
+) [42102-193]
+2017-02-20 19:27:10 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting "'e2417bbe-984d-45a0-94cc-5d3ef2b487e8' (PLAYER: SEED BIGINT)"; SQL statement:
+INSERT INTO PLAYER VALUES (
+'0a3a322d-7528-4680-9518-4ace0128a8ab',
+'borkus',
+'borkus@guildsr.us',
+'IQjcGOYUoT2oXUllojh4c7PTmxgJSJJIfxi9EBwbUnc=',
+'e2417bbe-984d-45a0-94cc-5d3ef2b487e8',
+'en_US',
+'America/New_York'
+) -- ('0a3a322d-7528-4680-9518-4ace0128a8ab', 'borkus', 'borkus@guildsr.us', 'IQjcGOYUoT2oXUllojh4c7PTmxgJSJJIfxi9EBwbUnc=', 'e2417bbe-984d-45a0-94cc-5d3ef2b487e8', 'en_US', 'America/New_York') [22018-193]
+2017-02-20 19:37:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "TITLE_ID" not found; SQL statement:
+ALTER TABLE PAYMENT ADD FOREIGN KEY (player_id) REFERENCES PLAYER(title_id) [42122-193]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.table.Table.getColumn(Table.java:682)
+	at org.h2.table.IndexColumn.mapColumns(IndexColumn.java:74)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:223)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:77)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:98)
+	at org.h2.command.Command.executeUpdate(Command.java:258)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:184)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:158)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1380)
+	at org.h2.server.web.WebApp.query(WebApp.java:1053)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1015)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1002)
+	at org.h2.server.web.WebThread.process(WebThread.java:164)
+	at org.h2.server.web.WebThread.run(WebThread.java:89)
+	at java.lang.Thread.run(Unknown Source)
+2017-02-20 19:43:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FORM[*] INFORMATION_SCHEMA.INDEXES "; SQL statement:
+select * form INFORMATION_SCHEMA.INDEXES [42000-193]
