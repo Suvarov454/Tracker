@@ -13,6 +13,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class TrackerConfiguration extends Configuration {
 
+    @NotNull
+    @JsonProperty("hash_iterations")
+    private int iterations;
+    
+    @NotNull
+    @JsonProperty("hash_key_length")
+    private int keyLength;
+    
+    @NotNull
+    @JsonProperty("hash_algorithm")
+    private String algorithm;
+    
     @Valid
     @NotNull
     @JsonProperty("database")
@@ -22,6 +34,30 @@ public class TrackerConfiguration extends Configuration {
     @NotNull
     @JsonProperty("swagger")
     private SwaggerBundleConfiguration swaggerBundleConfiguration;
+
+    public int getIterations () {
+	return iterations;
+    }
+
+    public void setIterations (int config) {
+	this.iterations = config;
+    }
+
+    public int getKeyLength () {
+	return keyLength;
+    }
+
+    public void setKeyLength (int config) {
+	this.keyLength = config;
+    }
+
+    public String getAlgorithm () {
+	return algorithm;
+    }
+
+    public void setAlgorithm (String config) {
+	this.algorithm = config;
+    }
 
     public DataSourceFactory getDataSourceFactory () {
         return database;
@@ -38,5 +74,5 @@ public class TrackerConfiguration extends Configuration {
     public void setSwaggerBundleConfiguration (SwaggerBundleConfiguration config) {
         this.swaggerBundleConfiguration = config;
     }
-
+    
 }

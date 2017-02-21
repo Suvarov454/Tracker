@@ -1,6 +1,18 @@
-#template: Hello, %s!
+# Because everyone would get the joke if it were 42.
+# In a production system, make this a fairly big number; you want to take a
+#   substantial fraction of a second while producing a hash. This will make
+#   things hard for blackhats.
+hash_iterations: 37
 
-#defaultName: Stranger
+# The guidance at https://www.owasp.org/index.php/Hashing_Java suggests that
+#   a key length of 256 bytes is safe.
+hash_key_length: 256
+
+# The guidance at https://www.owasp.org/index.php/Hashing_Java suggests that
+#   some systems won't hava the ...SHA512 algorithm; if so, try the SHA1
+#   version: PBKDF2WithHmacSHA1. The SHA1 algorithm is safe when it is paired
+#   with PBKDF2. Apparently.
+hash_algorithm: PBKDF2WithHmacSHA512
 
 # Database settings.
 database:

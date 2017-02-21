@@ -1,7 +1,8 @@
 package com.yoyodyne.tracker;
 
-import com.yoyodyne.tracker.resource.PingResource;
 import com.yoyodyne.tracker.resource.AchievementResource;
+import com.yoyodyne.tracker.resource.PasswordResource;
+import com.yoyodyne.tracker.resource.PingResource;
 import com.yoyodyne.tracker.resource.TitleResource;
 import com.yoyodyne.tracker.db.DbFacade;
 import io.dropwizard.Application;
@@ -46,14 +47,15 @@ public class TrackerApplication extends Application<TrackerConfiguration> {
 
     @Override
     public void run(TrackerConfiguration configuration,
-                    Environment environment) {
+                    Environment environment) throws Exception {
 	// Instantiate the database facade based on configuration.
 	// TODO : pick ctor from config
 	DbFacade database = new com.yoyodyne.tracker.db.h2jdbi.H2Db( configuration, environment );
 
+        environment.jersey().register(new AchievementResource( database ));
+        environment.jersey().register(new PasswordResource( configuration ));
         environment.jersey().register(new PingResource());
         environment.jersey().register(new TitleResource( database ));
-        environment.jersey().register(new AchievementResource( database ));
     }
 
     public static void usage() {
