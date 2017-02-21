@@ -1,6 +1,6 @@
 package com.yoyodyne.tracker.db.h2jdbi.dao;
 
-import com.yoyodyne.tracker.db.jdbi.TitleMapper;
+import com.yoyodyne.tracker.db.jdbi.mapper.TitleMapper;
 import com.yoyodyne.tracker.domain.Title;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.BindBean;

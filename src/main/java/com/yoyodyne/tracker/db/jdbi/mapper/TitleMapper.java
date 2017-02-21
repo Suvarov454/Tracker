@@ -1,4 +1,4 @@
-package com.yoyodyne.tracker.db.jdbi;
+package com.yoyodyne.tracker.db.jdbi.mapper;
 
 import com.yoyodyne.tracker.domain.Title;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
