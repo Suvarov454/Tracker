@@ -50,6 +50,20 @@ public abstract class DbFacade {
     public abstract AchievementFacade getAchievementFacade ();
 
     /**
+     * Get the accessors for interacting with payment entities.
+     *
+     * @return a <code>PaymentFacade</code> instance.
+     */
+    public abstract PaymentFacade getPaymentFacade ();
+    
+    /**
+     * Get the accessors for interacting with subscription entities.
+     *
+     * @return a <code>SubscriptionFacade</code> instance.
+     */
+    public abstract SubscriptionFacade getSubscriptionFacade ();
+
+    /**
      * Get the accessors for interacting with title entities.
      *
      * @return a <code>TitleFacade</code> instance.

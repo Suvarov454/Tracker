@@ -2,9 +2,11 @@ package com.yoyodyne.tracker.resource;
 
 import com.codahale.metrics.annotation.Timed;
 import com.yoyodyne.tracker.domain.Achievement;
+import com.yoyodyne.tracker.domain.Subscription;
 import com.yoyodyne.tracker.domain.Title;
 import com.yoyodyne.tracker.db.DbFacade;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -37,14 +39,16 @@ public class TitleResource {
     @Timed
     @Path("/{titleId}/achievement")
     @ApiOperation(
-        value = "Add an achievement to a game.",
+        value = "Add an achievement to a game title.",
 	response = Achievement.class
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
 	@ApiResponse(code = 500, message = "Some data access error.")
     })
-    public Achievement addAchievement (@PathParam("titleId") String titleIdStr, Achievement achievement) throws Exception {
+    public Achievement addAchievement (
+        @ApiParam(value = "ID of the title", required = true)
+	@PathParam("titleId") String titleIdStr, Achievement achievement) throws Exception {
 	// Make sure the title IDs match
 	UUID titleId = UUID.fromString( titleIdStr );
 	if (!titleId.equals( achievement.getTitleId() )) {
@@ -84,7 +88,7 @@ public class TitleResource {
     @Timed
     @Path("/{titleId}/achievement")
     @ApiOperation(
-        value = "Get all the achievements in the a game.",
+        value = "Get all the achievements in a game title.",
 	response = Achievement.class,
 	responseContainer = "List"
     )
@@ -92,7 +96,9 @@ public class TitleResource {
         @ApiResponse(code = 400, message = "Some parsing error."),
 	@ApiResponse(code = 500, message = "Some data access error.")
     })
-    public List<Achievement> getAchievementsForTitle (@PathParam("titleId") String titleIdStr) throws Exception {
+    public List<Achievement> getAchievementsForTitle (
+        @ApiParam(value = "ID of the title", required = true)
+	@PathParam("titleId") String titleIdStr) throws Exception {
 	UUID titleId = UUID.fromString( titleIdStr );
 	List<Achievement> result = Collections.emptyList();
 	try (AutoCloseable resources = database.open()) {
@@ -120,6 +126,30 @@ public class TitleResource {
 	    LOGGER.info( "Found {} titles", titles.size() );
 	}
 	return titles;
+    }
+
+    @GET
+    @Timed
+    @Path("/{titleId}/subscription")
+    @ApiOperation(
+        value = "Get all the subscriptions for a game title.",
+	response = Subscription.class,
+	responseContainer = "List"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Some parsing error."),
+	@ApiResponse(code = 500, message = "Some data access error.")
+    })
+    public List<Subscription> getSubscriptionsForTitle (
+        @ApiParam(value = "ID of the title", required = true)
+	@PathParam("titleId") String titleIdStr) throws Exception {
+	UUID titleId = UUID.fromString( titleIdStr );
+	List<Subscription> result = Collections.emptyList();
+	try (AutoCloseable resources = database.open()) {
+	    result = database.getSubscriptionFacade().getSubscriptionsForTitle( resources, titleId );
+	    LOGGER.info( "Got {} subscriptions for title with ID {}", result.size(), titleIdStr );
+	}
+	return result;
     }
 
 }

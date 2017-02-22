@@ -23,14 +23,14 @@ public class H2TitleDb implements TitleFacade {
      * Never allow default construction.
      */
     private H2TitleDb () {
-	throw new UnsupportedOperationException( "All H2TitleDb instances require a DBI." );
+	throw new UnsupportedOperationException( "All H2TitleDb instances require a DAO." );
     }
     
     /**
      * Use the given <code>DBI</code> to access Title entities.
      *
      * @param dbi the <code>DBI</code> to be used.
-     * @param dao the <code>TitleDBI</code> to be used.
+     * @param dao the <code>TitleDAO</code> to be used.
      */
     public H2TitleDb (DBI dbi, TitleDAO dao) {
 	this.dbi = dbi;

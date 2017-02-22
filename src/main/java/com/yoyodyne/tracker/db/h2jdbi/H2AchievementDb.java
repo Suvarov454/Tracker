@@ -23,14 +23,14 @@ public class H2AchievementDb implements AchievementFacade {
      * Never allow default construction.
      */
     private H2AchievementDb () {
-	throw new UnsupportedOperationException( "All H2AchievementDb instances require a DBI." );
+	throw new UnsupportedOperationException( "All H2AchievementDb instances require a DAO." );
     }
     
     /**
      * Use the given <code>DBI</code> to access Achievement entities.
      *
      * @param dbi the <code>DBI</code> to be used.
-     * @param dao the <code>AchievementDBI</code> to be used.
+     * @param dao the <code>AchievementDAO</code> to be used.
      */
     public H2AchievementDb (DBI dbi, AchievementDAO dao) {
 	this.dbi = dbi;

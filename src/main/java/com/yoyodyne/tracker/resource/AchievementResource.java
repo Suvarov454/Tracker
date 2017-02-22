@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.yoyodyne.tracker.domain.Achievement;
 import com.yoyodyne.tracker.db.DbFacade;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -44,7 +45,9 @@ public class AchievementResource {
         @ApiResponse(code = 404, message = "No achievement has the given ID."),
 	@ApiResponse(code = 500, message = "Some data access error.")
     })
-    public Achievement getAchievement (@PathParam("achievementId") String achievementIdStr) throws Exception {
+    public Achievement getAchievement (
+        @ApiParam(value = "ID of the achievement", required = true)
+	@PathParam("achievementId") String achievementIdStr) throws Exception {
 	UUID achievementId = UUID.fromString( achievementIdStr );
 	Achievement achievement = null;
 	try (AutoCloseable resources = database.open()) {

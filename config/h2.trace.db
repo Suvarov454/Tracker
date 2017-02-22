@@ -503,3 +503,114 @@ ALTER TABLE PAYMENT ADD FOREIGN KEY (player_id) REFERENCES PLAYER(title_id) [421
 2017-02-20 19:43:07 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FORM[*] INFORMATION_SCHEMA.INDEXES "; SQL statement:
 select * form INFORMATION_SCHEMA.INDEXES [42000-193]
+2017-02-21 21:14:04 jdbc[12]: exception
+org.h2.jdbc.JdbcSQLException: Column "extension_duration" not found [42122-193]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.jdbc.JdbcResultSet.getColumnIndex(JdbcResultSet.java:3148)
+	at org.h2.jdbc.JdbcResultSet.get(JdbcResultSet.java:3236)
+	at org.h2.jdbc.JdbcResultSet.getLong(JdbcResultSet.java:676)
+	at com.yoyodyne.tracker.db.jdbi.mapper.PaymentMapper.map(PaymentMapper.java:20)
+	at com.yoyodyne.tracker.db.jdbi.mapper.PaymentMapper.map(PaymentMapper.java:13)
+	at org.skife.jdbi.v2.RegisteredMapper.map(RegisteredMapper.java:35)
+	at org.skife.jdbi.v2.Query$4.munge(Query.java:183)
+	at org.skife.jdbi.v2.QueryResultSetMunger.munge(QueryResultSetMunger.java:41)
+	at org.skife.jdbi.v2.SQLStatement.internalExecute(SQLStatement.java:1344)
+	at org.skife.jdbi.v2.Query.fold(Query.java:173)
+	at org.skife.jdbi.v2.Query.list(Query.java:82)
+	at org.skife.jdbi.v2.sqlobject.ResultReturnThing$IterableReturningThing.result(ResultReturnThing.java:253)
+	at org.skife.jdbi.v2.sqlobject.ResultReturnThing.map(ResultReturnThing.java:46)
+	at org.skife.jdbi.v2.sqlobject.QueryHandler.invoke(QueryHandler.java:43)
+	at org.skife.jdbi.v2.sqlobject.SqlObject.invoke(SqlObject.java:212)
+	at org.skife.jdbi.v2.sqlobject.SqlObject$2.intercept(SqlObject.java:109)
+	at org.skife.jdbi.v2.sqlobject.CloseInternalDoNotUseThisClass$$EnhancerByCGLIB$$6e099376.getPaymentsForPlayerForTitle(<generated>)
+	at com.yoyodyne.tracker.db.h2jdbi.H2PaymentAndSubscriptionDb.getPaymentsForPlayerForTitle(H2PaymentAndSubscriptionDb.java:61)
+	at com.yoyodyne.tracker.resource.PlayerResource.getPaymentsForPlayerForTitle(PlayerResource.java:98)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory$1.invoke(ResourceMethodInvocationHandlerFactory.java:81)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:144)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:161)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$TypeOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:205)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:99)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:389)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:347)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:102)
+	at org.glassfish.jersey.server.ServerRuntime$2.run(ServerRuntime.java:326)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:317)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:305)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1154)
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:473)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:427)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:388)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:341)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:228)
+	at io.dropwizard.jetty.NonblockingServletHolder.handle(NonblockingServletHolder.java:49)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1689)
+	at io.dropwizard.servlets.ThreadNameFilter.doFilter(ThreadNameFilter.java:34)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1676)
+	at io.dropwizard.jersey.filter.AllowedMethodsFilter.handle(AllowedMethodsFilter.java:50)
+	at io.dropwizard.jersey.filter.AllowedMethodsFilter.doFilter(AllowedMethodsFilter.java:44)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1676)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1174)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1106)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at com.codahale.metrics.jetty9.InstrumentedHandler.handle(InstrumentedHandler.java:240)
+	at io.dropwizard.jetty.ContextRoutingHandler.handle(ContextRoutingHandler.java:38)
+	at org.eclipse.jetty.server.handler.gzip.GzipHandler.handle(GzipHandler.java:459)
+	at io.dropwizard.jetty.BiDiGzipHandler.handle(BiDiGzipHandler.java:68)
+	at org.eclipse.jetty.server.handler.RequestLogHandler.handle(RequestLogHandler.java:56)
+	at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:169)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:524)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:319)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:253)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.executeProduceConsume(ExecuteProduceConsume.java:303)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceConsume(ExecuteProduceConsume.java:148)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:136)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:671)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:589)
+	at java.lang.Thread.run(Thread.java:745)
+2017-02-21 21:17:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DROP TABLE PAYMENT
+CREATE[*] TABLE PAYMENT (
+PAYMENT_ID UUID PRIMARY KEY,
+TITLE_ID UUID,
+PLAYER_ID UUID,
+TIMESTAMP DATETIME,
+EXTENSION_DURATION BIGINT,
+EXPIRATION_BASIS DATE,
+EXPIRATION_DATE DATE,
+AMOUNT DECIMAL(20,2),
+CURRENCY VARCHAR(8),
+TYPE VARCHAR(8),
+TOKEN VARCHAR(255)
+) "; SQL statement:
+drop table payment
+CREATE TABLE PAYMENT (
+payment_id UUID PRIMARY KEY,
+title_id UUID,
+player_id UUID,
+timestamp DATETIME,
+extension_duration BIGINT,
+expiration_basis DATE,
+expiration_date DATE,
+amount DECIMAL(20,2),
+currency VARCHAR(8),
+type VARCHAR(8),
+token VARCHAR(255)
+) [42000-193]
