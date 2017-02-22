@@ -23,12 +23,15 @@ public class Subscription {
     @NotNull
     private Long level;
 
-    public Subscription (UUID subscriptionId, UUID playerId, UUID titleId, Date expirationDate, Long level) {
+    private String name;
+
+    public Subscription (UUID subscriptionId, UUID playerId, UUID titleId, Date expirationDate, Long level, String name) {
 	this.subscriptionId = subscriptionId;
 	this.playerId = playerId;
 	this.titleId = titleId;
 	this.expirationDate = expirationDate;
 	this.level = level;
+	this.name = name;
     }
     
     public Subscription() {} // required for deserialization
@@ -91,6 +94,18 @@ public class Subscription {
     public void setLevel (Long level) {
 	if (level != null) {
 	    this.level = level;
+	}
+    }
+
+    @JsonProperty
+    public String getName () {
+	return this.name;
+    }
+
+    @JsonProperty
+    public void setName (String name) {
+	if (name != null && !name.isEmpty()) {
+	    this.name = name;
 	}
     }
 

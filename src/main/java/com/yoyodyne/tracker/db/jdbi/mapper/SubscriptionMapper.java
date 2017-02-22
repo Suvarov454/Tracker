@@ -17,7 +17,8 @@ public class SubscriptionMapper implements ResultSetMapper<Subscription> {
 				 UUID.fromString( r.getString("player_id") ),
 				 UUID.fromString( r.getString("title_id") ),
 				 r.getDate( "expiration_date" ),
-				 r.getLong( "level" ) );
+				 r.getLong( "level" ),
+				 r.getString( "name" ) );
     }
 
 }

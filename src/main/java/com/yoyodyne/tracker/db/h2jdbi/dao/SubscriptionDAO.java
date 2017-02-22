@@ -14,10 +14,18 @@ import java.util.UUID;
 @RegisterMapper(SubscriptionMapper.class)
 public interface SubscriptionDAO {
 
-    @SqlQuery("select * from subscription where title_id = :titleId")
+    @SqlQuery("select sub.*, tit.name " +
+	      "from subscription sub " +
+	      "inner join title tit " +
+	      "on sub.title_id = tit.title_id " +
+	      "where sub.title_id = :titleId")
     List<Subscription> getSubscriptionsForTitle (@Bind("titleId") String titleIdStr);
 
-    @SqlQuery("select * from subscription where player_id = :playerId")
+    @SqlQuery("select sub.*, tit.name " +
+	      "from subscription sub " +
+	      "inner join title tit " +
+	      "on sub.title_id = tit.title_id " +
+	      "where player_id = :playerId")
     List<Subscription> getSubscriptionsForPlayer (@Bind("playerId") String playerId);
     
 }
