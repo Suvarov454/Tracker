@@ -7,9 +7,10 @@ import com.yoyodyne.tracker.db.SubscriptionFacade;
 import com.yoyodyne.tracker.domain.Payment;
 import com.yoyodyne.tracker.domain.Subscription;
 import org.skife.jdbi.v2.DBI;
-// import org.skife.jdbi.v2.Handle; //killme
+import org.skife.jdbi.v2.Handle;
 // import java.sql.ResultSet; //killme
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +70,24 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
     @Override
     public List<Subscription> getSubscriptionsForPlayer (AutoCloseable resources, UUID playerId) throws SQLException {
 	return this.subDao.getSubscriptionsForPlayer( playerId.toString() );
+    }
+
+    
+    protected void addPayment (Handle handle, Payment payment ) {
+	// TODO : implement me
+    }
+    
+    protected void addSubscription (Handle handle, Subscription subscription ) {
+	// TODO : implement me
+    }
+    
+    protected Date getExpirationDate (Handle handle, UUID playerId, UUID titleId ) {
+	// TODO : implement me
+	return null;
+    }
+    
+    protected void setExpirationDate (Handle handle, UUID playerId, UUID titleId, Date newDate ) {
+	// TODO : implement me
     }
 
 }
