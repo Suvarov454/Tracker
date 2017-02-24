@@ -20,15 +20,15 @@ import java.util.List;
 public interface AchievementDAO {
 
     @SqlUpdate("insert into achievement (achievement_id "
-	       + ", title_id"
-	       + ", name"
-	       + ", description"
-	       + ", sort"
-	       + ") values (:achievementId"
-	       + ", :titleId"
-	       + ", :name"
-	       + ", :description"
-	       + ", :sort)")
+               + ", title_id"
+               + ", name"
+               + ", description"
+               + ", sort"
+               + ") values (:achievementId"
+               + ", :titleId"
+               + ", :name"
+               + ", :description"
+               + ", :sort)")
     void addAchievement (@BindBean Achievement entity);
 
     @SqlQuery("select * from achievement where achievement_id = :entityId")

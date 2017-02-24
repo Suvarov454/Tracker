@@ -14,10 +14,10 @@ public class AchievementMapper implements ResultSetMapper<Achievement> {
 
     public Achievement map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         return new Achievement( UUID.fromString( r.getString("achievement_id") ),
-				UUID.fromString( r.getString("title_id") ),
-				r.getString( "name" ),
-				r.getString( "description" ),
-				r.getString( "sort" ) );
+                                UUID.fromString( r.getString("title_id") ),
+                                r.getString( "name" ),
+                                r.getString( "description" ),
+                                r.getString( "sort" ) );
     }
 
 }

@@ -36,27 +36,27 @@ public class TrackerConfiguration extends Configuration {
     private SwaggerBundleConfiguration swaggerBundleConfiguration;
 
     public int getIterations () {
-	return iterations;
+        return iterations;
     }
 
     public void setIterations (int config) {
-	this.iterations = config;
+        this.iterations = config;
     }
 
     public int getKeyLength () {
-	return keyLength;
+        return keyLength;
     }
 
     public void setKeyLength (int config) {
-	this.keyLength = config;
+        this.keyLength = config;
     }
 
     public String getAlgorithm () {
-	return algorithm;
+        return algorithm;
     }
 
     public void setAlgorithm (String config) {
-	this.algorithm = config;
+        this.algorithm = config;
     }
 
     public DataSourceFactory getDataSourceFactory () {

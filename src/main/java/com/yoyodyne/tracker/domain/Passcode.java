@@ -14,34 +14,34 @@ public class Passcode {
     private UUID seed;
 
     public Passcode (String passcode, UUID seed) {
-	this.passcode = passcode;
-	this.seed = seed;
+        this.passcode = passcode;
+        this.seed = seed;
     }
     
     public Passcode() {} // required for deserialization
 
     @JsonProperty
     public String getPasscode () {
-	return this.passcode;
+        return this.passcode;
     }
 
     @JsonProperty
     public void setPasscode (String passcode) {
-	if (passcode != null && !passcode.isEmpty()) {
-	    this.passcode = passcode;
-	}
+        if (passcode != null && !passcode.isEmpty()) {
+            this.passcode = passcode;
+        }
     }
 
     @JsonProperty
     public UUID getSeed () {
-	return this.seed;
+        return this.seed;
     }
 
     @JsonProperty
     public void setSeed (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.seed = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.seed = UUID.fromString( uuidStr );
+        }
     }
 
 }

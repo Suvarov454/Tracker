@@ -21,14 +21,14 @@ public class TrackerApplication extends Application<TrackerConfiguration> {
     public static final String APP_NAME = "Tracker";
 
     public static void main(String[] args) throws Exception {
-	// We need at least one argument
-	if (args.length == 0) {
-	    LOGGER.warn( "{} invoked without arguments", APP_NAME );
-	    usage();
-	    System.exit(1);
-	}
-	LOGGER.info( "{} with {} arguments (first: {})", APP_NAME, args.length, args[0] );
-	new TrackerApplication().run(args);
+        // We need at least one argument
+        if (args.length == 0) {
+            LOGGER.warn( "{} invoked without arguments", APP_NAME );
+            usage();
+            System.exit(1);
+        }
+        LOGGER.info( "{} with {} arguments (first: {})", APP_NAME, args.length, args[0] );
+        new TrackerApplication().run(args);
     }
 
     @Override
@@ -41,17 +41,17 @@ public class TrackerApplication extends Application<TrackerConfiguration> {
 
         bootstrap.addBundle(new SwaggerBundle<TrackerConfiguration>() {
             @Override
-	    protected SwaggerBundleConfiguration getSwaggerBundleConfiguration (TrackerConfiguration config) {
-		return config.getSwaggerBundleConfiguration();
-	    }
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration (TrackerConfiguration config) {
+                return config.getSwaggerBundleConfiguration();
+            }
         });
     }
 
     @Override
     public void run(TrackerConfiguration configuration,
                     Environment environment) throws Exception {
-	// Instantiate the database facade implementation.
-	DbFacade database = new H2Db( configuration, environment );
+        // Instantiate the database facade implementation.
+        DbFacade database = new H2Db( configuration, environment );
 
         environment.jersey().register(new AchievementResource( database ));
         environment.jersey().register(new PasswordResource( configuration ));
@@ -61,8 +61,8 @@ public class TrackerApplication extends Application<TrackerConfiguration> {
     }
 
     public static void usage() {
-	System.err.print( APP_NAME );
-	System.err.println(" must be supplied with a configuration YAML filename.");
+        System.err.print( APP_NAME );
+        System.err.println(" must be supplied with a configuration YAML filename.");
     }
     
 }

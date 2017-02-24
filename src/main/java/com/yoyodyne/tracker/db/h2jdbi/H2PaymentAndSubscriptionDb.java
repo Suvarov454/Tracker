@@ -32,48 +32,48 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
     private final SimpleDateFormat dateFormat;
 
     private static final String ADD_PAYMENT = "insert into payment ( "
-	+ "payment_id, "
-	+ "title_id, "
-	+ "player_id, "
-	+ "timestamp, "
-	+ "extension_duration, "
-	+ "expiration_basis, "
-	+ "expiration_date, "
-	+ "amount, "
-	+ "currency, "
-	+ "type, "
-	+ "token) values ( "
-	+ ":paymentId, "
-	+ ":titleId, "
-	+ ":playerId, "
-	+ ":timestamp, "
-	+ ":extensionDuration, "
-	+ ":expirationBasis, "
-	+ ":expirationDate, "
-	+ ":amount, "
-	+ ":currency, "
-	+ ":type, "
-	+ ":token) ";
+        + "payment_id, "
+        + "title_id, "
+        + "player_id, "
+        + "timestamp, "
+        + "extension_duration, "
+        + "expiration_basis, "
+        + "expiration_date, "
+        + "amount, "
+        + "currency, "
+        + "type, "
+        + "token) values ( "
+        + ":paymentId, "
+        + ":titleId, "
+        + ":playerId, "
+        + ":timestamp, "
+        + ":extensionDuration, "
+        + ":expirationBasis, "
+        + ":expirationDate, "
+        + ":amount, "
+        + ":currency, "
+        + ":type, "
+        + ":token) ";
 
     private static final String ADD_SUBSCRIPTION = "insert into subscription ( "
-	+ "subscription_id, "
-	+ "title_id, "
-	+ "player_id, "
-	+ "expiration_date, "
-	+ "level) values ( "
-	+ ":subscriptionId, "
-	+ ":titleId, "
-	+ ":playerId, "
-	+ ":expirationDate, "
-	+ ":level) ";
+        + "subscription_id, "
+        + "title_id, "
+        + "player_id, "
+        + "expiration_date, "
+        + "level) values ( "
+        + ":subscriptionId, "
+        + ":titleId, "
+        + ":playerId, "
+        + ":expirationDate, "
+        + ":level) ";
 
     private static final String GET_EXPIRATION_DATE = "select expiration_date "
-	+ "from subscription where player_id = :playerId and title_id = "
-	+ ":titleId";
+        + "from subscription where player_id = :playerId and title_id = "
+        + ":titleId";
 
     private static final String SET_EXPIRATION_DATE = "update subscription "
-	+ "set expiration_date = :expirationDate where player_id = :playerId "
-	+ "and title_id = :titleId";
+        + "set expiration_date = :expirationDate where player_id = :playerId "
+        + "and title_id = :titleId";
     
     /**
      * Use the given <code>DBI</code> to access Subscription entities.
@@ -83,43 +83,43 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
      * @param subDao the <code>SubscriptionDAO</code> to be used.
      */
     public H2PaymentAndSubscriptionDb (DBI dbi, PaymentDAO payDao, SubscriptionDAO subDao) {
-	this.dbi = dbi;
-	this.payDao = payDao;
-	this.subDao = subDao;
-	this.service = new PaymentService( this );
-	this.dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        this.dbi = dbi;
+        this.payDao = payDao;
+        this.subDao = subDao;
+        this.service = new PaymentService( this );
+        this.dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
     }
 
     // @Override
     // public Subscription addSubscription (AutoCloseable resources, Subscription input) throws SQLException {
-    // 	// Use a random UUID instead of the input one.
-    // 	Subscription newSubscription = new Subscription( UUID.randomUUID(), input.getName() );
-    // 	this.subDao.addSubscription( newSubscription );
-    // 	return newSubscription;
+    //  // Use a random UUID instead of the input one.
+    //  Subscription newSubscription = new Subscription( UUID.randomUUID(), input.getName() );
+    //  this.subDao.addSubscription( newSubscription );
+    //  return newSubscription;
     // }
 
     @Override
     public Date addPaymentForPlayerForTitle (AutoCloseable resources, Payment payment) throws SQLException {
-	// Open a handle from the resources.
- 	Handle handle = LazyHandle.open( resources );
+        // Open a handle from the resources.
+        Handle handle = LazyHandle.open( resources );
 
-	// Process the payment in the service.
-	return this.service.processPayment( handle, payment );
+        // Process the payment in the service.
+        return this.service.processPayment( handle, payment );
     }
 
     @Override
     public List<Payment> getPaymentsForPlayerForTitle (AutoCloseable resources, UUID playerId, UUID titleId) throws SQLException {
-	return this.payDao.getPaymentsForPlayerForTitle( playerId.toString(), titleId.toString() );
+        return this.payDao.getPaymentsForPlayerForTitle( playerId.toString(), titleId.toString() );
     }
 
     @Override
     public List<Subscription> getSubscriptionsForTitle (AutoCloseable resources, UUID titleId) throws SQLException {
-	return this.subDao.getSubscriptionsForTitle( titleId.toString() );
+        return this.subDao.getSubscriptionsForTitle( titleId.toString() );
     }
 
     @Override
     public List<Subscription> getSubscriptionsForPlayer (AutoCloseable resources, UUID playerId) throws SQLException {
-	return this.subDao.getSubscriptionsForPlayer( playerId.toString() );
+        return this.subDao.getSubscriptionsForPlayer( playerId.toString() );
     }
 
 
@@ -130,19 +130,19 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
      * @param payment the <code>Payment</code> to be added.
      */
     protected void addPayment (Handle handle, Payment payment ) {
-	handle.createStatement( ADD_PAYMENT )
-	    .bind( "paymentId", payment.getPaymentId() )
-	    .bind( "playerId", payment.getPlayerId() )
-	    .bind( "titleId", payment.getTitleId() )
-	    .bind( "timestamp", new Date() )
-	    .bind( "extensionDuration", payment.getExtensionDuration() )
-	    .bind( "expirationBasis", payment.getExpirationBasis() )
-	    .bind( "expirationDate", payment.getExpirationDate() )
-	    .bind( "amount", payment.getAmount() )
-	    .bind( "currency", payment.getCurrency() )
-	    .bind( "type", payment.getType() )
-	    .bind( "token", payment.getToken() )
-	    .execute();
+        handle.createStatement( ADD_PAYMENT )
+            .bind( "paymentId", payment.getPaymentId() )
+            .bind( "playerId", payment.getPlayerId() )
+            .bind( "titleId", payment.getTitleId() )
+            .bind( "timestamp", new Date() )
+            .bind( "extensionDuration", payment.getExtensionDuration() )
+            .bind( "expirationBasis", payment.getExpirationBasis() )
+            .bind( "expirationDate", payment.getExpirationDate() )
+            .bind( "amount", payment.getAmount() )
+            .bind( "currency", payment.getCurrency() )
+            .bind( "type", payment.getType() )
+            .bind( "token", payment.getToken() )
+            .execute();
     }
     
     /**
@@ -152,13 +152,13 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
      * @param subscription the <code>Subscription</code> to be added.
      */
     protected void addSubscription (Handle handle, Subscription subscription ) {
-	handle.createStatement( ADD_SUBSCRIPTION )
-	    .bind( "subscriptionId", subscription.getSubscriptionId() )
-	    .bind( "playerId", subscription.getPlayerId() )
-	    .bind( "titleId", subscription.getTitleId() )
-	    .bind( "expirationDate", subscription.getExpirationDate() )
-	    .bind( "level", subscription.getLevel() )
-	    .execute();
+        handle.createStatement( ADD_SUBSCRIPTION )
+            .bind( "subscriptionId", subscription.getSubscriptionId() )
+            .bind( "playerId", subscription.getPlayerId() )
+            .bind( "titleId", subscription.getTitleId() )
+            .bind( "expirationDate", subscription.getExpirationDate() )
+            .bind( "level", subscription.getLevel() )
+            .execute();
     }
 
     /**
@@ -176,23 +176,23 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
      *   not currently subscribed.
      */
     protected Date getExpirationDate (Handle handle, UUID playerId, UUID titleId ) {
-	ResultIterator<String> rs = handle.createQuery( GET_EXPIRATION_DATE )
-	    .bind( "playerId", playerId )
-	    .bind( "titleId", titleId )
-	    .map( StringMapper.FIRST )
-	    .iterator();
-	Date expirationDate = null;
-	if (rs.hasNext()) {
-	    String dateStr = rs.next();
-	    try {
-		expirationDate = this.dateFormat.parse( dateStr );
-	    }
-	    catch (Exception err) {
-		err.printStackTrace( System.err );
-	    }
-	}
-	rs.close();
-	return expirationDate;
+        ResultIterator<String> rs = handle.createQuery( GET_EXPIRATION_DATE )
+            .bind( "playerId", playerId )
+            .bind( "titleId", titleId )
+            .map( StringMapper.FIRST )
+            .iterator();
+        Date expirationDate = null;
+        if (rs.hasNext()) {
+            String dateStr = rs.next();
+            try {
+                expirationDate = this.dateFormat.parse( dateStr );
+            }
+            catch (Exception err) {
+                err.printStackTrace( System.err );
+            }
+        }
+        rs.close();
+        return expirationDate;
     }
 
     /**
@@ -200,11 +200,11 @@ public class H2PaymentAndSubscriptionDb implements PaymentFacade, SubscriptionFa
      * the specified game title.
      */
     protected void setExpirationDate (Handle handle, UUID playerId, UUID titleId, Date newDate ) {
-	handle.createStatement( SET_EXPIRATION_DATE )
-	    .bind( "playerId", playerId )
-	    .bind( "titleId", titleId )
-	    .bind( "expirationDate", newDate )
-	    .execute();
+        handle.createStatement( SET_EXPIRATION_DATE )
+            .bind( "playerId", playerId )
+            .bind( "titleId", titleId )
+            .bind( "expirationDate", newDate )
+            .execute();
     }
 
 }

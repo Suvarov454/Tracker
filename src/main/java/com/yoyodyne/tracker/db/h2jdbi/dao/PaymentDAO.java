@@ -19,6 +19,6 @@ public interface PaymentDAO {
 
     @SqlQuery("select * from payment where player_id = :playerId and title_id = :titleId")
     List<Payment> getPaymentsForPlayerForTitle (@Bind("playerId") String playerIdStr,
-						@Bind("titleId") String titleIdStr);
+                                                @Bind("titleId") String titleIdStr);
     
 }

@@ -29,9 +29,9 @@ public class PasswordResource {
     private final PasscodeUtil hasher;
 
     public PasswordResource (TrackerConfiguration config) throws Exception {
-	this.hasher = new PasscodeUtil( config.getIterations(),
-					config.getKeyLength(),
-					config.getAlgorithm() );
+        this.hasher = new PasscodeUtil( config.getIterations(),
+                                        config.getKeyLength(),
+                                        config.getAlgorithm() );
     }
     
     @POST
@@ -39,22 +39,22 @@ public class PasswordResource {
     @Path("/hash")
     @ApiOperation(
         value = "Convert the plain text password to an encrypted passcode." +
-	" A seed will be randomly generated, if one is not supplied.",
-	response = Passcode.class
+        " A seed will be randomly generated, if one is not supplied.",
+        response = Passcode.class
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
-	@ApiResponse(code = 500, message = "Some cryptoengine error.")
+        @ApiResponse(code = 500, message = "Some cryptoengine error.")
     })
     public Passcode hashPassword (Passcode plainText) throws Exception {
-	// If no seed was passed, generate one.
-	UUID seed = plainText.getSeed();
-	if (seed == null) {
-	    seed = UUID.randomUUID();
-	}
+        // If no seed was passed, generate one.
+        UUID seed = plainText.getSeed();
+        if (seed == null) {
+            seed = UUID.randomUUID();
+        }
 
-	String cryptoText = hasher.hash( plainText.getPasscode(), seed );
-	return new Passcode( cryptoText, seed );
+        String cryptoText = hasher.hash( plainText.getPasscode(), seed );
+        return new Passcode( cryptoText, seed );
     }
 
 }

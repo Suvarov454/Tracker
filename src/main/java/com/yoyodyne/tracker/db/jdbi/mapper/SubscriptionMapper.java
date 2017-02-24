@@ -14,11 +14,11 @@ public class SubscriptionMapper implements ResultSetMapper<Subscription> {
 
     public Subscription map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         return new Subscription( UUID.fromString( r.getString("subscription_id") ),
-				 UUID.fromString( r.getString("player_id") ),
-				 UUID.fromString( r.getString("title_id") ),
-				 r.getDate( "expiration_date" ),
-				 r.getLong( "level" ),
-				 r.getString( "name" ) );
+                                 UUID.fromString( r.getString("player_id") ),
+                                 UUID.fromString( r.getString("title_id") ),
+                                 r.getDate( "expiration_date" ),
+                                 r.getLong( "level" ),
+                                 r.getString( "name" ) );
     }
 
 }

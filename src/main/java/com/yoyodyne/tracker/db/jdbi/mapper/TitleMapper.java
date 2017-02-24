@@ -14,7 +14,7 @@ public class TitleMapper implements ResultSetMapper<Title> {
 
     public Title map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         return new Title( UUID.fromString( r.getString("title_id") ),
-			  r.getString( "name" ) );
+                          r.getString( "name" ) );
     }
 
 }

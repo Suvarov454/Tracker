@@ -26,11 +26,11 @@ public class Achievement {
     private String sort;
 
     public Achievement (UUID achievementId, UUID titleId, String name, String description, String sort) {
-	this.achievementId = achievementId;
-	this.titleId = titleId;
-	this.description = description;
-	this.name = name;
-	this.sort = sort;
+        this.achievementId = achievementId;
+        this.titleId = titleId;
+        this.description = description;
+        this.name = name;
+        this.sort = sort;
     }
     
     public Achievement() {} // required for deserialization
@@ -38,62 +38,62 @@ public class Achievement {
 
     @JsonProperty
     public UUID getAchievementId () {
-	return this.achievementId;
+        return this.achievementId;
     }
 
     @JsonProperty
     public void setAchievementId (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.achievementId = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.achievementId = UUID.fromString( uuidStr );
+        }
     }
 
     @JsonProperty
     public UUID getTitleId () {
-	return this.titleId;
+        return this.titleId;
     }
 
     @JsonProperty
     public void setTitleId (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.titleId = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.titleId = UUID.fromString( uuidStr );
+        }
     }
 
     @JsonProperty
     public String getName () {
-	return this.name;
+        return this.name;
     }
 
     @JsonProperty
     public void setName (String name) {
-	if (name != null && !name.isEmpty()) {
-	    this.name = name;
-	}
+        if (name != null && !name.isEmpty()) {
+            this.name = name;
+        }
     }
 
     @JsonProperty
     public String getDescription () {
-	return this.description;
+        return this.description;
     }
 
     @JsonProperty
     public void setDescription (String description) {
-	if (description != null && !description.isEmpty()) {
-	    this.description = description;
-	}
+        if (description != null && !description.isEmpty()) {
+            this.description = description;
+        }
     }
 
     @JsonProperty
     public String getSort () {
-	return this.sort;
+        return this.sort;
     }
 
     @JsonProperty
     public void setSort (String sort) {
-	if (sort != null && !sort.isEmpty()) {
-	    this.sort = sort;
-	}
+        if (sort != null && !sort.isEmpty()) {
+            this.sort = sort;
+        }
     }
 
 }

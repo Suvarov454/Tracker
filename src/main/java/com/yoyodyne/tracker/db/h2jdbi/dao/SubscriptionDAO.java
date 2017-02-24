@@ -15,17 +15,17 @@ import java.util.UUID;
 public interface SubscriptionDAO {
 
     @SqlQuery("select sub.*, tit.name " +
-	      "from subscription sub " +
-	      "inner join title tit " +
-	      "on sub.title_id = tit.title_id " +
-	      "where sub.title_id = :titleId")
+              "from subscription sub " +
+              "inner join title tit " +
+              "on sub.title_id = tit.title_id " +
+              "where sub.title_id = :titleId")
     List<Subscription> getSubscriptionsForTitle (@Bind("titleId") String titleIdStr);
 
     @SqlQuery("select sub.*, tit.name " +
-	      "from subscription sub " +
-	      "inner join title tit " +
-	      "on sub.title_id = tit.title_id " +
-	      "where player_id = :playerId")
+              "from subscription sub " +
+              "inner join title tit " +
+              "on sub.title_id = tit.title_id " +
+              "where player_id = :playerId")
     List<Subscription> getSubscriptionsForPlayer (@Bind("playerId") String playerId);
     
 }

@@ -23,10 +23,10 @@ public class PingResource {
     @Path("/")
     @ApiOperation(
         value = "Prove that the application is responding to HTTP requests.",
-	response = String.class
+        response = String.class
     )
     public String getPing () {
-	LOGGER.info( "{} pinged", TrackerApplication.APP_NAME );
-	return "pong";
+        LOGGER.info( "{} pinged", TrackerApplication.APP_NAME );
+        return "pong";
     }
 }

@@ -46,27 +46,27 @@ public class Payment {
     private String token;
 
     public Payment (UUID paymentId,
-		    UUID playerId,
-		    UUID titleId,
-		    Date timestamp,
-		    long extensionDuration,
-		    Date expirationBasis,
-		    Date expirationDate,
-		    BigDecimal amount,
-		    String currency,
-		    String type,
-		    String token) {
-	this.paymentId = paymentId;
-	this.playerId = playerId;
-	this.titleId = titleId;
-	this.timestamp = timestamp;
-	this.extensionDuration = extensionDuration;
-	this.expirationBasis = expirationBasis;
-	this.expirationDate = expirationDate;
-	this.amount = amount;
-	this.currency = currency;
-	this.type = type;
-	this.token = token;
+                    UUID playerId,
+                    UUID titleId,
+                    Date timestamp,
+                    long extensionDuration,
+                    Date expirationBasis,
+                    Date expirationDate,
+                    BigDecimal amount,
+                    String currency,
+                    String type,
+                    String token) {
+        this.paymentId = paymentId;
+        this.playerId = playerId;
+        this.titleId = titleId;
+        this.timestamp = timestamp;
+        this.extensionDuration = extensionDuration;
+        this.expirationBasis = expirationBasis;
+        this.expirationDate = expirationDate;
+        this.amount = amount;
+        this.currency = currency;
+        this.type = type;
+        this.token = token;
     }
     
     public Payment() {} // required for deserialization
@@ -74,134 +74,134 @@ public class Payment {
 
     @JsonProperty
     public UUID getPaymentId () {
-	return this.paymentId;
+        return this.paymentId;
     }
 
     @JsonProperty
     public void setPaymentId (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.paymentId = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.paymentId = UUID.fromString( uuidStr );
+        }
     }
 
     @JsonProperty
     public UUID getPlayerId () {
-	return this.playerId;
+        return this.playerId;
     }
 
     @JsonProperty
     public void setPlayerId (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.playerId = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.playerId = UUID.fromString( uuidStr );
+        }
     }
 
     @JsonProperty
     public UUID getTitleId () {
-	return this.titleId;
+        return this.titleId;
     }
 
     @JsonProperty
     public void setTitleId (String uuidStr) {
-	if (uuidStr != null && !uuidStr.isEmpty()) {
-	    this.titleId = UUID.fromString( uuidStr );
-	}
+        if (uuidStr != null && !uuidStr.isEmpty()) {
+            this.titleId = UUID.fromString( uuidStr );
+        }
     }
 
     @JsonProperty
     public Date getTimestamp () {
-	return this.timestamp;
+        return this.timestamp;
     }
 
     @JsonProperty
     public void setTimestamp (Date timestamp) {
-	if (timestamp != null) {
-	    this.timestamp = timestamp;
-	}
+        if (timestamp != null) {
+            this.timestamp = timestamp;
+        }
     }
 
     @JsonProperty
     public Long getExtensionDuration () {
-	return this.extensionDuration;
+        return this.extensionDuration;
     }
 
     @JsonProperty
     public void setExtensionDuration (Long extensionDuration) {
-	if (extensionDuration != null) {
-	    this.extensionDuration = extensionDuration;
-	}
+        if (extensionDuration != null) {
+            this.extensionDuration = extensionDuration;
+        }
     }
 
     @JsonProperty
     public Date getExpirationBasis () {
-	return this.expirationBasis;
+        return this.expirationBasis;
     }
 
     @JsonProperty
     public void setExpirationBasis (Date expirationBasis) {
-	if (expirationBasis != null) {
-	    this.expirationBasis = expirationBasis;
-	}
+        if (expirationBasis != null) {
+            this.expirationBasis = expirationBasis;
+        }
     }
 
     @JsonProperty
     public Date getExpirationDate () {
-	return this.expirationDate;
+        return this.expirationDate;
     }
 
     @JsonProperty
     public void setExpirationDate (Date expirationDate) {
-	if (expirationDate != null) {
-	    this.expirationDate = expirationDate;
-	}
+        if (expirationDate != null) {
+            this.expirationDate = expirationDate;
+        }
     }
 
     @JsonProperty
     public BigDecimal getAmount () {
-	return this.amount;
+        return this.amount;
     }
 
     @JsonProperty
     public void setAmount (BigDecimal amount) {
-	if (amount != null) {
-	    this.amount = amount;
-	}
+        if (amount != null) {
+            this.amount = amount;
+        }
     }
 
     @JsonProperty
     public String getCurrency () {
-	return this.currency;
+        return this.currency;
     }
 
     @JsonProperty
     public void setCurrency (String currency) {
-	if (currency != null && !currency.isEmpty()) {
-	    this.currency = currency;
-	}
+        if (currency != null && !currency.isEmpty()) {
+            this.currency = currency;
+        }
     }
 
     @JsonProperty
     public String getType () {
-	return this.type;
+        return this.type;
     }
 
     @JsonProperty
     public void setType (String type) {
-	if (type != null && !type.isEmpty()) {
-	    this.type = type;
-	}
+        if (type != null && !type.isEmpty()) {
+            this.type = type;
+        }
     }
 
     @JsonProperty
     public String getToken () {
-	return this.token;
+        return this.token;
     }
 
     @JsonProperty
     public void setToken (String token) {
-	if (token != null && !token.isEmpty()) {
-	    this.token = token;
-	}
+        if (token != null && !token.isEmpty()) {
+            this.token = token;
+        }
     }
 
 }

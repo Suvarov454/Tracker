@@ -32,7 +32,7 @@ public class TitleResource {
     private DbFacade database;
 
     public TitleResource (DbFacade database) {
-	this.database = database;
+        this.database = database;
     }
     
     @PUT
@@ -40,28 +40,28 @@ public class TitleResource {
     @Path("/{titleId}/achievement")
     @ApiOperation(
         value = "Add an achievement to a game title.",
-	response = Achievement.class
+        response = Achievement.class
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
-	@ApiResponse(code = 500, message = "Some data access error.")
+        @ApiResponse(code = 500, message = "Some data access error.")
     })
     public Achievement addAchievement (
         @ApiParam(value = "ID of the title", required = true)
-	@PathParam("titleId") String titleIdStr, Achievement achievement) throws Exception {
-	// Make sure the title IDs match
-	UUID titleId = UUID.fromString( titleIdStr );
-	if (!titleId.equals( achievement.getTitleId() )) {
-	    LOGGER.warn( "Tried to add an achievement to the wrong title (title ID: {}, achievement title id: {}",
-			 titleIdStr, achievement.getTitleId() );
-			 throw new IllegalArgumentException( "Tried to add an achievement to the wrong title." );
-	}
-	Achievement result = null;
-	try (AutoCloseable resources = database.open()) {
-	    result = database.getAchievementFacade().addAchievement( resources, achievement );
-	    LOGGER.info( "Added achievement with ID {}", result.getAchievementId() );
-	}
-	return result;
+        @PathParam("titleId") String titleIdStr, Achievement achievement) throws Exception {
+        // Make sure the title IDs match
+        UUID titleId = UUID.fromString( titleIdStr );
+        if (!titleId.equals( achievement.getTitleId() )) {
+            LOGGER.warn( "Tried to add an achievement to the wrong title (title ID: {}, achievement title id: {}",
+                         titleIdStr, achievement.getTitleId() );
+                         throw new IllegalArgumentException( "Tried to add an achievement to the wrong title." );
+        }
+        Achievement result = null;
+        try (AutoCloseable resources = database.open()) {
+            result = database.getAchievementFacade().addAchievement( resources, achievement );
+            LOGGER.info( "Added achievement with ID {}", result.getAchievementId() );
+        }
+        return result;
     }
     
     @PUT
@@ -69,19 +69,19 @@ public class TitleResource {
     @Path("/")
     @ApiOperation(
         value = "Add a game title for this studio.",
-	response = Title.class
+        response = Title.class
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
         @ApiResponse(code = 500, message = "Some data access error.")
     })
     public Title addTitle (Title title) throws Exception {
-	Title result = null;
-	try (AutoCloseable resources = database.open()) {
-	    result = database.getTitleFacade().addTitle( resources, title );
-	    LOGGER.info( "Added title with ID {}", result.getTitleId() );
-	}
-	return result;
+        Title result = null;
+        try (AutoCloseable resources = database.open()) {
+            result = database.getTitleFacade().addTitle( resources, title );
+            LOGGER.info( "Added title with ID {}", result.getTitleId() );
+        }
+        return result;
     }
 
     @GET
@@ -89,23 +89,23 @@ public class TitleResource {
     @Path("/{titleId}/achievement")
     @ApiOperation(
         value = "Get all the achievements in a game title.",
-	response = Achievement.class,
-	responseContainer = "List"
+        response = Achievement.class,
+        responseContainer = "List"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
-	@ApiResponse(code = 500, message = "Some data access error.")
+        @ApiResponse(code = 500, message = "Some data access error.")
     })
     public List<Achievement> getAchievementsForTitle (
         @ApiParam(value = "ID of the title", required = true)
-	@PathParam("titleId") String titleIdStr) throws Exception {
-	UUID titleId = UUID.fromString( titleIdStr );
-	List<Achievement> result = Collections.emptyList();
-	try (AutoCloseable resources = database.open()) {
-	    result = database.getAchievementFacade().getAchievementsForTitle( resources, titleId );
-	    LOGGER.info( "Got {} achievements for title with ID {}", result.size(), titleIdStr );
-	}
-	return result;
+        @PathParam("titleId") String titleIdStr) throws Exception {
+        UUID titleId = UUID.fromString( titleIdStr );
+        List<Achievement> result = Collections.emptyList();
+        try (AutoCloseable resources = database.open()) {
+            result = database.getAchievementFacade().getAchievementsForTitle( resources, titleId );
+            LOGGER.info( "Got {} achievements for title with ID {}", result.size(), titleIdStr );
+        }
+        return result;
     }
     
     @GET
@@ -113,19 +113,19 @@ public class TitleResource {
     @Path("/")
     @ApiOperation(
         value = "Get the list of titles for this studio.",
-	response = Title.class,
-	responseContainer = "List"
+        response = Title.class,
+        responseContainer = "List"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 500, message = "Some data access error.")
     })
     public List<Title> getAllTitles () throws Exception {
-	List<Title> titles = Collections.emptyList();
-	try (AutoCloseable resources = database.open()) {
-	    titles = database.getTitleFacade().getAllTitles( resources );
-	    LOGGER.info( "Found {} titles", titles.size() );
-	}
-	return titles;
+        List<Title> titles = Collections.emptyList();
+        try (AutoCloseable resources = database.open()) {
+            titles = database.getTitleFacade().getAllTitles( resources );
+            LOGGER.info( "Found {} titles", titles.size() );
+        }
+        return titles;
     }
 
     @GET
@@ -133,23 +133,23 @@ public class TitleResource {
     @Path("/{titleId}/subscription")
     @ApiOperation(
         value = "Get all the subscriptions for a game title.",
-	response = Subscription.class,
-	responseContainer = "List"
+        response = Subscription.class,
+        responseContainer = "List"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
-	@ApiResponse(code = 500, message = "Some data access error.")
+        @ApiResponse(code = 500, message = "Some data access error.")
     })
     public List<Subscription> getSubscriptionsForTitle (
         @ApiParam(value = "ID of the title", required = true)
-	@PathParam("titleId") String titleIdStr) throws Exception {
-	UUID titleId = UUID.fromString( titleIdStr );
-	List<Subscription> result = Collections.emptyList();
-	try (AutoCloseable resources = database.open()) {
-	    result = database.getSubscriptionFacade().getSubscriptionsForTitle( resources, titleId );
-	    LOGGER.info( "Got {} subscriptions for title with ID {}", result.size(), titleIdStr );
-	}
-	return result;
+        @PathParam("titleId") String titleIdStr) throws Exception {
+        UUID titleId = UUID.fromString( titleIdStr );
+        List<Subscription> result = Collections.emptyList();
+        try (AutoCloseable resources = database.open()) {
+            result = database.getSubscriptionFacade().getSubscriptionsForTitle( resources, titleId );
+            LOGGER.info( "Got {} subscriptions for title with ID {}", result.size(), titleIdStr );
+        }
+        return result;
     }
 
 }

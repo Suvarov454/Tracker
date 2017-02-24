@@ -28,9 +28,9 @@ public final class PasscodeUtil {
      *   be used.
      */
     public PasscodeUtil (int iterations, int keyLength, String algorithm) throws Exception {
-	this.iterations = iterations;
-	this.keyLength = keyLength;
-	this.skf = SecretKeyFactory.getInstance( algorithm );
+        this.iterations = iterations;
+        this.keyLength = keyLength;
+        this.skf = SecretKeyFactory.getInstance( algorithm );
     }
     
     /**
@@ -48,18 +48,18 @@ public final class PasscodeUtil {
      *   cryptographic hash of the plaintext.
      */
     public String hash (String plainText, UUID seed) throws Exception {
-	// Given the seed, generate a random salt. The size of the salt in
-	// bytes is the one eighth the length of the key in bits (doy).
-	byte[] seedArray = PasscodeUtil.convertToBytes( seed );
-	SecureRandom rng = new SecureRandom( seedArray );
-	byte[] salt = new byte[ keyLength / 8 ];
-	rng.nextBytes( salt );
+        // Given the seed, generate a random salt. The size of the salt in
+        // bytes is the one eighth the length of the key in bits (doy).
+        byte[] seedArray = PasscodeUtil.convertToBytes( seed );
+        SecureRandom rng = new SecureRandom( seedArray );
+        byte[] salt = new byte[ keyLength / 8 ];
+        rng.nextBytes( salt );
 
-	// Followed example https://www.owasp.org/index.php/Hashing_Java
-	PBEKeySpec spec = new PBEKeySpec( plainText.toCharArray(), salt, iterations, keyLength );
-	SecretKey key = skf.generateSecret( spec );
-	byte[] res = key.getEncoded( );
-	return  Base64.getEncoder().encodeToString( res );
+        // Followed example https://www.owasp.org/index.php/Hashing_Java
+        PBEKeySpec spec = new PBEKeySpec( plainText.toCharArray(), salt, iterations, keyLength );
+        SecretKey key = skf.generateSecret( spec );
+        byte[] res = key.getEncoded( );
+        return  Base64.getEncoder().encodeToString( res );
  
     }
 
@@ -71,10 +71,10 @@ public final class PasscodeUtil {
      *   are ordered from MSB to LSB.
      */
     public static byte[] convertToBytes (UUID seed) {
-	ByteBuffer buf = ByteBuffer.allocate(Long.BYTES*2);
-	buf.putLong( seed.getMostSignificantBits() );
-	buf.putLong( seed.getLeastSignificantBits() );
-	return buf.array();
+        ByteBuffer buf = ByteBuffer.allocate(Long.BYTES*2);
+        buf.putLong( seed.getMostSignificantBits() );
+        buf.putLong( seed.getLeastSignificantBits() );
+        return buf.array();
     }
 
 }

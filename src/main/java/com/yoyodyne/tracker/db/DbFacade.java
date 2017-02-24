@@ -23,8 +23,8 @@ public abstract class DbFacade {
      *   should use during construction.
      */
     public DbFacade (TrackerConfiguration config, Environment env) {
-	this.config = config;
-	this.env = env;
+        this.config = config;
+        this.env = env;
     }
 
     /**

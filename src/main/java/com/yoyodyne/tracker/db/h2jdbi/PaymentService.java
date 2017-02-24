@@ -19,7 +19,7 @@ public class PaymentService {
      *   the service should use for its database interactions.
      */
     public PaymentService (H2PaymentAndSubscriptionDb database) {
-	this.database = database;
+        this.database = database;
     }
 
     /**
@@ -33,13 +33,13 @@ public class PaymentService {
      *   the start date.
      */
     public static Date addDays (Date startDate, long duration) {
-	LocalDate basis = LocalDate.of( startDate.getYear() + 1900,
-					startDate.getMonth() + 1,
-					startDate.getDate() );
-	basis = basis.plusDays( duration );
-	return new Date( basis.getYear() - 1900,
-			 basis.getMonthValue() - 1,
-			 basis.getDayOfMonth() );
+        LocalDate basis = LocalDate.of( startDate.getYear() + 1900,
+                                        startDate.getMonth() + 1,
+                                        startDate.getDate() );
+        basis = basis.plusDays( duration );
+        return new Date( basis.getYear() - 1900,
+                         basis.getMonthValue() - 1,
+                         basis.getDayOfMonth() );
     }
 
     /**
@@ -48,12 +48,12 @@ public class PaymentService {
      * @return the <code>Date</code> instance for today.
      */
     public static Date getToday () {
-	// Return the begining of the day today
-	Date today = new Date();
-	today.setHours( 0 );
-	today.setMinutes( 0 );
-	today.setSeconds( 0 );
-	return today;
+        // Return the begining of the day today
+        Date today = new Date();
+        today.setHours( 0 );
+        today.setMinutes( 0 );
+        today.setSeconds( 0 );
+        return today;
     }
 
     /**
@@ -68,15 +68,15 @@ public class PaymentService {
      *   This value will never be <code>null</code>.
      */
     protected Date getExpirationBasis (Date expirationDate) {
-	// If the date is null or in the past, today is the basis.
-	Date expirationBasis = this.getToday();
+        // If the date is null or in the past, today is the basis.
+        Date expirationBasis = this.getToday();
 
-	// If the expiration date is after today, it becomes the new basis.
-	if (expirationDate != null && expirationDate.after( expirationBasis )) {
-	    expirationBasis = expirationDate;
-	}
+        // If the expiration date is after today, it becomes the new basis.
+        if (expirationDate != null && expirationDate.after( expirationBasis )) {
+            expirationBasis = expirationDate;
+        }
 
-	return expirationBasis;
+        return expirationBasis;
     }
 
     /**
@@ -89,50 +89,50 @@ public class PaymentService {
      *   payment's player for the given game title.
      */
     public Date processPayment (Handle handle, Payment payment) {
-	// We'll use the player ID and title ID several times.
-	final UUID playerId = payment.getPlayerId();
-	final UUID titleId = payment.getTitleId();
+        // We'll use the player ID and title ID several times.
+        final UUID playerId = payment.getPlayerId();
+        final UUID titleId = payment.getTitleId();
 
-	// Get the expiration date for the player's current subscription.
-	// N.B. this will be null if the payment should open a new subscription.
-	Date currentExpiration = this.database.getExpirationDate( handle,
-								  playerId,
-								  titleId );
+        // Get the expiration date for the player's current subscription.
+        // N.B. this will be null if the payment should open a new subscription.
+        Date currentExpiration = this.database.getExpirationDate( handle,
+                                                                  playerId,
+                                                                  titleId );
 
-	// Get the basis for the updated expiration date.
-	Date expirationBasis = this.getExpirationBasis( currentExpiration );
+        // Get the basis for the updated expiration date.
+        Date expirationBasis = this.getExpirationBasis( currentExpiration );
 
-	// Calculate the new expiration date for the player's subscription.
-	Date expirationDate = this.addDays( expirationBasis,
-					    payment.getExtensionDuration() );
+        // Calculate the new expiration date for the player's subscription.
+        Date expirationDate = this.addDays( expirationBasis,
+                                            payment.getExtensionDuration() );
 
-	// Set the payment's values from the calculated values and store the
-	// payment record before the subscription.
-	payment.setExpirationBasis( expirationBasis );
-	payment.setExpirationDate( expirationDate );
-	this.database.addPayment( handle, payment );
+        // Set the payment's values from the calculated values and store the
+        // payment record before the subscription.
+        payment.setExpirationBasis( expirationBasis );
+        payment.setExpirationDate( expirationDate );
+        this.database.addPayment( handle, payment );
 
-	// Is the player subscribed to the game? Expired subscriptions count.
-	if (currentExpiration == null) {
-	    // Nope. Add a subscription to the game.
-	    // Start the player at level 1.
-	    Subscription subscription = new Subscription( UUID.randomUUID(),
-							  playerId,
-							  titleId,
-							  expirationDate,
-							  Long.valueOf( 1 ),
-							  null );
-	    this.database.addSubscription( handle,
-					   subscription );
-	}
-	else {
-	    // Yup. Update the subscription's expiration date.
-	    this.database.setExpirationDate( handle,
-					     playerId,
-					     titleId,
-					     expirationDate );
-	}
-	return expirationDate;
+        // Is the player subscribed to the game? Expired subscriptions count.
+        if (currentExpiration == null) {
+            // Nope. Add a subscription to the game.
+            // Start the player at level 1.
+            Subscription subscription = new Subscription( UUID.randomUUID(),
+                                                          playerId,
+                                                          titleId,
+                                                          expirationDate,
+                                                          Long.valueOf( 1 ),
+                                                          null );
+            this.database.addSubscription( handle,
+                                           subscription );
+        }
+        else {
+            // Yup. Update the subscription's expiration date.
+            this.database.setExpirationDate( handle,
+                                             playerId,
+                                             titleId,
+                                             expirationDate );
+        }
+        return expirationDate;
     }
 
 }

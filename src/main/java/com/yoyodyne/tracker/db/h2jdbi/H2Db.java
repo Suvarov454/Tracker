@@ -39,40 +39,40 @@ public class H2Db extends DbFacade {
      * @param env the Dropwizard <code>Environment</code> to be used.
      */
     public H2Db (TrackerConfiguration config, Environment env) {
-	super( config, env );
-	this.dbi = new DBIFactory().build( env, config.getDataSourceFactory(), "db" );
-	this.achievementDao = dbi.onDemand( AchievementDAO.class );
-	this.paymentDao = dbi.onDemand( PaymentDAO.class );
-	this.subscriptionDao = dbi.onDemand( SubscriptionDAO.class );
-	this.titleDao = dbi.onDemand( TitleDAO.class );
+        super( config, env );
+        this.dbi = new DBIFactory().build( env, config.getDataSourceFactory(), "db" );
+        this.achievementDao = dbi.onDemand( AchievementDAO.class );
+        this.paymentDao = dbi.onDemand( PaymentDAO.class );
+        this.subscriptionDao = dbi.onDemand( SubscriptionDAO.class );
+        this.titleDao = dbi.onDemand( TitleDAO.class );
     }
 
     @Override
     public AutoCloseable open () {
-	// Provide a lazy-opening JDBI handle.
-	return new LazyHandle( dbi );
+        // Provide a lazy-opening JDBI handle.
+        return new LazyHandle( dbi );
     }
 
     @Override
     public AchievementFacade getAchievementFacade () {
-	return new H2AchievementDb( this.dbi, this.achievementDao );
+        return new H2AchievementDb( this.dbi, this.achievementDao );
     }
 
     @Override
     public PaymentFacade getPaymentFacade () {
-	// The same class as for subcription entities.
-	return new H2PaymentAndSubscriptionDb( this.dbi, this.paymentDao, this.subscriptionDao );
+        // The same class as for subcription entities.
+        return new H2PaymentAndSubscriptionDb( this.dbi, this.paymentDao, this.subscriptionDao );
     }
 
     @Override
     public SubscriptionFacade getSubscriptionFacade () {
-	// The same class as for payment entities.
-	return new H2PaymentAndSubscriptionDb( this.dbi, this.paymentDao, this.subscriptionDao );
+        // The same class as for payment entities.
+        return new H2PaymentAndSubscriptionDb( this.dbi, this.paymentDao, this.subscriptionDao );
     }
 
     @Override
     public TitleFacade getTitleFacade () {
-	return new H2TitleDb( this.dbi, this.titleDao );
+        return new H2TitleDb( this.dbi, this.titleDao );
     }
 
 }

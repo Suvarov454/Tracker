@@ -30,7 +30,7 @@ public class AchievementResource {
     private DbFacade database;
 
     public AchievementResource (DbFacade database) {
-	this.database = database;
+        this.database = database;
     }
     
     @GET
@@ -38,23 +38,23 @@ public class AchievementResource {
     @Path("/{achievementId}")
     @ApiOperation(
         value = "Get the detaild of the given achievement.",
-	response = Achievement.class
+        response = Achievement.class
     )
     @ApiResponses(value = {
         @ApiResponse(code = 400, message = "Some parsing error."),
         @ApiResponse(code = 404, message = "No achievement has the given ID."),
-	@ApiResponse(code = 500, message = "Some data access error.")
+        @ApiResponse(code = 500, message = "Some data access error.")
     })
     public Achievement getAchievement (
         @ApiParam(value = "ID of the achievement", required = true)
-	@PathParam("achievementId") String achievementIdStr) throws Exception {
-	UUID achievementId = UUID.fromString( achievementIdStr );
-	Achievement achievement = null;
-	try (AutoCloseable resources = database.open()) {
-	    achievement = database.getAchievementFacade().getAchievement( resources, achievementId );
-	    LOGGER.info( "Found achievement with ID {}", achievement.getAchievementId() );
-	}
-	return achievement;
+        @PathParam("achievementId") String achievementIdStr) throws Exception {
+        UUID achievementId = UUID.fromString( achievementIdStr );
+        Achievement achievement = null;
+        try (AutoCloseable resources = database.open()) {
+            achievement = database.getAchievementFacade().getAchievement( resources, achievementId );
+            LOGGER.info( "Found achievement with ID {}", achievement.getAchievementId() );
+        }
+        return achievement;
     }
 
 }

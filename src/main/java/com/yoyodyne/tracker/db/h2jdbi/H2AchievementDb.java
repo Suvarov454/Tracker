@@ -24,33 +24,33 @@ public class H2AchievementDb implements AchievementFacade {
      * @param dao the <code>AchievementDAO</code> to be used.
      */
     public H2AchievementDb (DBI dbi, AchievementDAO dao) {
-	this.dbi = dbi;
-	this.dao = dao;
+        this.dbi = dbi;
+        this.dao = dao;
     }
 
     @Override
     public Achievement addAchievement (AutoCloseable resources, Achievement input) throws SQLException {
-	// // We need a DBI handle, which we *should* be available in resources.
-	// Handle handle = LazyHandle.open( resources ); //killme
+        // // We need a DBI handle, which we *should* be available in resources.
+        // Handle handle = LazyHandle.open( resources ); //killme
 
-	// Use a random UUID instead of the input one.
-	Achievement newAchievement = new Achievement( UUID.randomUUID(),
-						      input.getTitleId(),
-						      input.getName(),
-						      input.getDescription(),
-						      input.getSort() );
-	this.dao.addAchievement( newAchievement );
-	return newAchievement;
+        // Use a random UUID instead of the input one.
+        Achievement newAchievement = new Achievement( UUID.randomUUID(),
+                                                      input.getTitleId(),
+                                                      input.getName(),
+                                                      input.getDescription(),
+                                                      input.getSort() );
+        this.dao.addAchievement( newAchievement );
+        return newAchievement;
     }
 
     @Override
     public Achievement getAchievement (AutoCloseable resources, UUID achievementId) throws SQLException {
-	return this.dao.getAchievement( achievementId.toString() );
+        return this.dao.getAchievement( achievementId.toString() );
     }
 
     @Override
     public List<Achievement> getAchievementsForTitle (AutoCloseable resources, UUID titleId) throws SQLException {
-	return this.dao.getAchievementsForTitle( titleId.toString() );
+        return this.dao.getAchievementsForTitle( titleId.toString() );
     }
 
 }
