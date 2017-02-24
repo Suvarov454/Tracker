@@ -4,8 +4,6 @@ import com.yoyodyne.tracker.db.h2jdbi.dao.AchievementDAO;
 import com.yoyodyne.tracker.db.AchievementFacade;
 import com.yoyodyne.tracker.domain.Achievement;
 import org.skife.jdbi.v2.DBI;
-// import org.skife.jdbi.v2.Handle; //killme
-// import java.sql.ResultSet; //killme
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -18,13 +16,6 @@ public class H2AchievementDb implements AchievementFacade {
 
     private final DBI dbi;
     private final AchievementDAO dao;
-
-    /**
-     * Never allow default construction.
-     */
-    private H2AchievementDb () {
-	throw new UnsupportedOperationException( "All H2AchievementDb instances require a DAO." );
-    }
     
     /**
      * Use the given <code>DBI</code> to access Achievement entities.

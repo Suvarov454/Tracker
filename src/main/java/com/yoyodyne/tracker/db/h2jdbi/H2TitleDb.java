@@ -4,8 +4,6 @@ import com.yoyodyne.tracker.db.h2jdbi.dao.TitleDAO;
 import com.yoyodyne.tracker.db.TitleFacade;
 import com.yoyodyne.tracker.domain.Title;
 import org.skife.jdbi.v2.DBI;
-// import org.skife.jdbi.v2.Handle; //killme
-// import java.sql.ResultSet; //killme
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -18,13 +16,6 @@ public class H2TitleDb implements TitleFacade {
 
     private final DBI dbi;
     private final TitleDAO dao;
-
-    /**
-     * Never allow default construction.
-     */
-    private H2TitleDb () {
-	throw new UnsupportedOperationException( "All H2TitleDb instances require a DAO." );
-    }
     
     /**
      * Use the given <code>DBI</code> to access Title entities.
@@ -39,9 +30,6 @@ public class H2TitleDb implements TitleFacade {
 
     @Override
     public Title addTitle (AutoCloseable resources, Title input) throws SQLException {
-	// // We need a DBI handle, which we *should* be available in resources.
-	// Handle handle = LazyHandle.open( resources ); //killme
-
 	// Use a random UUID instead of the input one.
 	Title newTitle = new Title( UUID.randomUUID(), input.getName() );
 	this.dao.addTitle( newTitle );

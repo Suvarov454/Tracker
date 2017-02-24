@@ -12,14 +12,7 @@ public abstract class DbFacade {
 
     private final TrackerConfiguration config;
     private final Environment env;
-    
-    /**
-     * No default constructors are allowed.
-     */
-    private DbFacade () {
-	throw new UnsupportedOperationException( "All DbFacade instances require a DataSourceFactory." );
-    }
-    
+        
     /**
      * All subclasses must take a <code>TrackerConfiguration</code> and an
      * <code>Environment</code> in their constructors.

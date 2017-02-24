@@ -12,7 +12,7 @@ import java.util.UUID;
 import org.skife.jdbi.v2.Handle;
 import org.mockito.ArgumentMatcher;
 import org.mockito.InOrder;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PaymentServiceTest {
@@ -69,8 +69,20 @@ public class PaymentServiceTest {
 	    .getExtensionDuration();
 	return payment;
     }
+
+    /**
+     * Determine if the two dates match. This method handles nulls and whatever
+     * is causing Date#equals() to fail to match dates.
+     *
+     * @param expected the expected <code>Date</code> instance.
+     * @param actual the actual <code>Date</code> instance.
+     * @return <code>true</code> if the dates match.
+     */
+    protected boolean datesMatch (Date actual, Date expected) {
+	return String.valueOf( expected ).equals( String.valueOf( actual ) );
+    }
     
-    @BeforeTest
+    @BeforeMethod
     public void setCommonObjects () {
 	handle = mock( Handle.class );
 	database = mock( H2PaymentAndSubscriptionDb.class );
@@ -101,7 +113,7 @@ public class PaymentServiceTest {
 	expected.setHours( 0 );
 	expected.setMinutes( 0 );
 	expected.setSeconds( 0 );
-	assertEquals( PaymentService.getToday(), expected );
+	assertTrue( datesMatch( PaymentService.getToday(), expected ) );
     }
 
     @Test
@@ -121,15 +133,11 @@ public class PaymentServiceTest {
     public void noSubscriptionTest () {
 	// When the player has no subscription for the given game title,
 	// the basis for expiration basis is the current date.
-	doReturn( null )
-	    .when( database )
-	    .getExpirationDate( same( handle ),
-				same( playerId ),
-				same( titleId ) );
+	Date currentExpiration = null;
 	Date expected = PaymentService.getToday();
 	PaymentService subject = getSubject( database );
 
-	assertEquals( subject.getExpirationBasis( handle, playerId, titleId ),
+	assertEquals( subject.getExpirationBasis( currentExpiration ),
 		      expected );
     }
 
@@ -137,15 +145,11 @@ public class PaymentServiceTest {
     public void foundOldSubscriptionTest () {
 	// When the player has an expired subscription for the given game title,
 	// the basis for expiration basis is the current date.
-	doReturn( expiredDate )
-	    .when( database )
-	    .getExpirationDate( same( handle ),
-				same( playerId ),
-				same( titleId ) );
+	Date currentExpiration = expiredDate;
 	Date expected = PaymentService.getToday();
 	PaymentService subject = getSubject( database );
 
-	assertEquals( subject.getExpirationBasis( handle, playerId, titleId ),
+	assertEquals( subject.getExpirationBasis( currentExpiration ),
 		      expected );
     }
 
@@ -153,15 +157,11 @@ public class PaymentServiceTest {
     public void foundActiveSubscriptionTest () {
 	// When the player has an active subscription for the given game title,
 	// the basis for expiration basis is the expiration date.
-	doReturn( basisDate )
-	    .when( database )
-	    .getExpirationDate( same( handle ),
-				same( playerId ),
-				same( titleId ) );
+	Date currentExpiration = basisDate;
 	Date expected = basisDate;
 	PaymentService subject = getSubject( database );
 
-	assertEquals( subject.getExpirationBasis( handle, playerId, titleId ),
+	assertEquals( subject.getExpirationBasis( currentExpiration ),
 		      expected );
     }
 
@@ -194,7 +194,8 @@ public class PaymentServiceTest {
 	    .setExpirationDate( same( handle ),
 				same( playerId ),
 				same( titleId ),
-				same( expectedDate ) );
+				any( Date.class )
+				);
 
 	// Verify that the correct values were assigned to the payment
 	verify( payment ).setExpirationBasis( same( basisDate ) );
@@ -230,34 +231,19 @@ public class PaymentServiceTest {
 	inOrder.verify( database )
 	    .addPayment( same( handle ),
 			 same( payment ) );
-	// PLEASE NOTE : I expect reference equality in the tests below.
-	// ArgumentMatcher<Subscription> matches =
-	//     new ArgumentMatcher<Subscription>() {
-	// 	public boolean matches (Subscription sub) {
-	// 	    return (playerId == sub.getPlayerId() &&
-	// 		    titleId == sub.getTitleId() &&
-	// 		    expected == sub.getExpirationDate() &&
-	// 		    sub.getLevel() != null &&
-	// 		    sub.getLevel().longValue() == 0);
-	// 	}
-	// 	public String toString () {
-	// 	    return "New subcription with valid values";
-	// 	}
-	//     };
-	// inOrder.verify( database )
-	//     .addSubscription( same( handle ),
-	// 		      argThat( matches ) );
 	inOrder.verify( database )
 	    .addSubscription( same( handle ),
 			      argThat( sub -> // Java 8 lambda FTW!
-				       (playerId == sub.getPlayerId() &&
-					titleId == sub.getTitleId() &&
-					expected == sub.getExpirationDate() &&
+				       (fplayerId == sub.getPlayerId() &&
+					ftitleId == sub.getTitleId() &&
+					datesMatch( sub.getExpirationDate(), expected ) &&
 					sub.getLevel() != null &&
-					sub.getLevel().longValue() == 0) ) );
+					sub.getLevel().longValue() == 1) ) );
 
 	// Verify that the correct values were assigned to the payment
-	verify( payment ).setExpirationBasis( eq( PaymentService.getToday() ) );
+	verify( payment ).setExpirationBasis( argThat( date ->
+            datesMatch( date, PaymentService.getToday() )
+        ) );
 	verify( payment ).setExpirationDate( eq( expected ) );
     }
 

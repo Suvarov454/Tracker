@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -53,6 +54,55 @@ public class PlayerResource {
     // 	}
     // 	return result;
     // }
+
+    @PUT
+    @Timed
+    @Path("/{playerId}/subscription/{titleId}/payment")
+    @ApiOperation(
+        value = "Add a payment for a player to their subscription for a title;"
+	+ " Returns the new expiration date of the player's subscription.",
+	response = Date.class
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Some parsing error."),
+	@ApiResponse(code = 500, message = "Some data access error.")
+    })
+    public Date addPaymentsForPlayerForTitle (
+        @ApiParam(value = "ID of the player", required = true)
+	@PathParam("playerId") String playerIdStr,
+        @ApiParam(value = "ID of the title", required = true)
+	@PathParam("titleId") String titleIdStr,
+        Payment payment) throws Exception {
+	UUID playerId = UUID.fromString( playerIdStr );
+	UUID titleId = UUID.fromString( titleIdStr );
+
+	// The player and title IDs in the path must match the payment.
+	if (!playerId.equals( payment.getPlayerId() )) {
+	    String message = String.format(
+                "Player ID mismatch; path ID %1$s, payment ID %2$s",
+		String.valueOf( playerId ),
+		String.valueOf( payment.getPlayerId() ) );
+	    LOGGER.warn( message );
+	    throw new IllegalArgumentException( message );
+	}
+	if (!titleId.equals( payment.getTitleId() )) {
+	    String message = String.format(
+                "Title ID mismatch; path ID %1$s, payment ID %2$s",
+		String.valueOf( titleId ),
+		String.valueOf( payment.getTitleId() ) );
+	    LOGGER.warn( message );
+	    throw new IllegalArgumentException( message );
+	}
+	
+	Date result = null;
+	try (AutoCloseable resources = database.open()) {
+	    // Auto-generate a new payment ID.
+	    payment.setPaymentId( UUID.randomUUID().toString() );
+	    result = database.getPaymentFacade().addPaymentForPlayerForTitle( resources, payment );
+	    LOGGER.info( "Player with ID {} for title ID {} subscribed until {}", playerIdStr, titleIdStr, result );
+	}
+	return result;
+    }
     
     // @GET
     // @Timed
